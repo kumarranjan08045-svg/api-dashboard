@@ -1,5 +1,5 @@
 // ध्यान दें: यहाँ अपनी Render वेबसाइट का असली लिंक डालें (बिना अंतिम / के)
-const BACKEND_URL = "https://your-api.onrender.com"; 
+const BACKEND_URL = "https://api-getway-backend.onrender.com"; 
 
 const serviceType = document.getElementById('serviceType');
 const chatIdGroup = document.getElementById('chatIdGroup');

@@ -1,1 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Gateway Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glass-panel">
+        <h2>API Dashboard</h2>
+        <form id="apiForm">
+            <label>Project Name:</label>
+            <input type="text" id="projectName" required placeholder="e.g., My New Bot">
 
+            <label>Service Type:</label>
+            <select id="serviceType">
+                <option value="telegram">Telegram Bot</option>
+                <option value="ai">AI Model</option>
+                <option value="custom">Custom API</option>
+            </select>
+
+            <div id="tokenGroup">
+                <label>API Token / Bot Token:</label>
+                <input type="password" id="token" placeholder="Paste your token here">
+            </div>
+
+            <div id="chatIdGroup">
+                <label style="display: flex; align-items: center; gap: 10px;">
+                    Chat ID:
+                    <small style="color: #bbb; display: flex; align-items: center;">
+                        <input type="checkbox" id="skipChatId" style="width: auto; margin: 0;"> Skip (Optional)
+                    </small>
+                </label>
+                <input type="text" id="chatId" placeholder="Enter Chat ID">
+            </div>
+
+            <div id="aiModelGroup" class="hidden">
+                <label>AI Model Name:</label>
+                <input type="text" id="aiModel" placeholder="e.g., gemini-pro">
+            </div>
+
+            <button type="submit">Generate Secure URL</button>
+        </form>
+        
+        <div id="resultBox" class="hidden">
+            <p>Your Secure API URL:</p>
+            <input type="text" id="shortUrl" readonly>
+            <small style="color: #bbb;">Copy and use this in your GitHub projects.</small>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

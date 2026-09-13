@@ -1,5 +1,4 @@
-// ध्यान दें: यहाँ अपनी Render वेबसाइट का असली लिंक डालें (बिना अंतिम / के)
-const BACKEND_URL = "https://api-getway-backend.onrender.com"; 
+const BACKEND_URL = "https://api-getway-backend.onrender.com"; // यहाँ अपना असली रेंडर लिंक डालें
 
 const serviceType = document.getElementById('serviceType');
 const chatIdGroup = document.getElementById('chatIdGroup');
@@ -37,7 +36,26 @@ document.getElementById('apiForm').addEventListener('submit', async (e) => {
     };
 
     const btn = document.querySelector('button');
-    btn.innerText = "Generating...";
+    const resultBox = document.getElementById('resultBox');
+    const errorBox = document.getElementById('errorBox');
+    const errorMsg = document.getElementById('errorMsg');
+
+    // UI Reset
+    btn.disabled = true;
+    resultBox.classList.add('hidden');
+    errorBox.classList.add('hidden');
+
+    // Percentage Loading Animation
+    let progress = 1;
+    btn.innerText = `Generating... ${progress}%`;
+    
+    const progressInterval = setInterval(() => {
+        if (progress < 95) {
+            progress += Math.floor(Math.random() * 8) + 1; // 1 से 8 तक रैंडम बढ़ेगा
+            if (progress > 95) progress = 95;
+            btn.innerText = `Generating... ${progress}%`;
+        }
+    }, 150);
 
     try {
         const response = await fetch(`${BACKEND_URL}/api/create`, {
@@ -47,17 +65,30 @@ document.getElementById('apiForm').addEventListener('submit', async (e) => {
         });
 
         const data = await response.json();
+        clearInterval(progressInterval);
         
         if (data.success) {
-            document.getElementById('resultBox').classList.remove('hidden');
-            document.getElementById('shortUrl').value = `${BACKEND_URL}/t/${data.short_id}`;
-            btn.innerText = "Generate Secure URL";
+            btn.innerText = `Generating... 100%`;
+            setTimeout(() => {
+                resultBox.classList.remove('hidden');
+                document.getElementById('shortUrl').value = `${BACKEND_URL}/t/${data.short_id}`;
+                btn.innerText = "Generate Secure URL";
+                btn.disabled = false;
+            }, 500); // 100% दिखाने के लिए आधा सेकंड रुकेगा
         } else {
-            alert("Error: " + data.error);
+            showError(data.error || "UNKNOWN DATABASE ERROR");
             btn.innerText = "Try Again";
+            btn.disabled = false;
         }
     } catch (error) {
-        alert("Error! Check if Render backend URL is correct and live.");
-        btn.innerText = "Generate Secure URL";
+        clearInterval(progressInterval);
+        showError("CONNECTION FAILED: Unable to reach the backend server. Please wait a moment.");
+        btn.innerText = "Try Again";
+        btn.disabled = false;
+    }
+
+    function showError(text) {
+        errorMsg.innerText = text;
+        errorBox.classList.remove('hidden');
     }
 });

@@ -3,15 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>API Gateway Dashboard</title>
+    <title>Holographic API Gateway Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- 3D Hologram Grid Background Effect -->
+    <div class="hologram-grid"></div>
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+
     <div class="glass-panel">
-        <h2>API Dashboard</h2>
+        <div class="header-badge">SECURE GATEWAY v2.0</div>
+        <h2>Holo-API Dashboard</h2>
+        
         <form id="apiForm">
             <label>Project Name:</label>
-            <input type="text" id="projectName" required placeholder="e.g., My New Bot">
+            <input type="text" id="projectName" required placeholder="e.g., Cyber Bot">
 
             <label>Service Type:</label>
             <select id="serviceType">
@@ -22,13 +29,13 @@
 
             <div id="tokenGroup">
                 <label>API Token / Bot Token:</label>
-                <input type="password" id="token" placeholder="Paste your token here">
+                <input type="password" id="token" placeholder="Paste your token here" required>
             </div>
 
             <div id="chatIdGroup">
-                <label style="display: flex; align-items: center; gap: 10px;">
+                <label style="display: flex; align-items: center; justify-content: space-between;">
                     Chat ID:
-                    <small style="color: #bbb; display: flex; align-items: center;">
+                    <small style="color: #38bdf8; display: flex; align-items: center; gap: 5px; cursor: pointer;">
                         <input type="checkbox" id="skipChatId" style="width: auto; margin: 0;"> Skip (Optional)
                     </small>
                 </label>
@@ -40,19 +47,34 @@
                 <input type="text" id="aiModel" placeholder="e.g., gemini-pro">
             </div>
 
-            <button type="submit">Generate Secure URL</button>
+            <button type="submit" id="submitBtn">Generate Hologram URL</button>
         </form>
         
-        <!-- Professional Error Box -->
-        <div id="errorBox" class="hidden" style="background: rgba(239, 68, 68, 0.1); padding: 15px; border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.4); margin-top: 20px; color: #f87171; text-align: center;">
-            <h3 style="margin: 0 0 5px 0; font-size: 1.1em; letter-spacing: 1px;">SERVER ERROR</h3>
-            <p id="errorMsg" style="margin: 0; font-size: 0.9em;"></p>
+        <!-- Error Box -->
+        <div id="errorBox" class="hidden error-box">
+            <h3>SERVER ERROR</h3>
+            <p id="errorMsg"></p>
         </div>
 
-        <div id="resultBox" class="hidden">
+        <!-- Result & Auto-Copy Box -->
+        <div id="resultBox" class="hidden success-box">
             <p>Your Secure API URL:</p>
-            <input type="text" id="shortUrl" readonly>
-            <small style="color: #bbb;">Copy and use this in your GitHub projects.</small>
+            <div style="display: flex; gap: 8px;">
+                <input type="text" id="shortUrl" readonly style="margin: 0;">
+                <button id="copyBtn" class="mini-btn">Copy</button>
+            </div>
+            <small style="color: #34d399; display: block; margin-top: 6px;">⚡ Auto-copied to clipboard!</small>
+        </div>
+
+        <!-- History Section -->
+        <div class="history-section">
+            <div class="history-header">
+                <span>Recent History (<span id="historyCount">0</span>)</span>
+                <button id="clearHistory" class="clear-btn">Clear All</button>
+            </div>
+            <div id="historyList" class="history-list">
+                <p class="empty-history">No links generated yet.</p>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>

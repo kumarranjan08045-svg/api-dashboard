@@ -43,6 +43,12 @@
             <button type="submit">Generate Secure URL</button>
         </form>
         
+        <!-- Professional Error Box -->
+        <div id="errorBox" class="hidden" style="background: rgba(239, 68, 68, 0.1); padding: 15px; border-radius: 8px; border: 1px solid rgba(239, 68, 68, 0.4); margin-top: 20px; color: #f87171; text-align: center;">
+            <h3 style="margin: 0 0 5px 0; font-size: 1.1em; letter-spacing: 1px;">SERVER ERROR</h3>
+            <p id="errorMsg" style="margin: 0; font-size: 0.9em;"></p>
+        </div>
+
         <div id="resultBox" class="hidden">
             <p>Your Secure API URL:</p>
             <input type="text" id="shortUrl" readonly>
